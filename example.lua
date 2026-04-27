@@ -1,7 +1,9 @@
+
 -- ============================================
 -- TZEUI EXAMPLE SCRIPT
 -- ============================================
-local TzeUI = loadstring(game:HttpGet("https://raw.githubusercontent.com/jonathabejose-alt/Tze-ui/refs/heads/main/source.lua"))()
+local source = game:HttpGet("https://raw.githubusercontent.com/jonathabejose-alt/Tze-ui/refs/heads/main/source.lua")
+local TzeUI = loadstring(source)()
 
 local ui = TzeUI:CreateWindow({
     Title = "TzeUI Example",
