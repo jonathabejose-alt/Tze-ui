@@ -1292,23 +1292,20 @@ function TzeUI:CreateWindow(opts)
         return Tab
     end
 
-    -- SelectTab by reference
     function W:SelectTab(tab)
-        for _, t in ipairs(self._tabButtons) do
-            if t.page == tab._page then
-                t.btn:GetPropertyChangedSignal and nil
-                t.btn.MouseButton1Click:Fire()
-                -- fire manually
-                for _, tt in ipairs(self._tabButtons) do
-                    tt.page.Visible = false
-                end
-                tab._page.Visible = true
-                break
+    for _, t in ipairs(self._tabButtons) do
+        if t.page == tab._page then
+            for _, tt in ipairs(self._tabButtons) do
+                tt.page.Visible = false
+                tween(tt.btn, { TextColor3 = T.TextDim, BackgroundTransparency = 1 }, 0.15)
+                tween(tt.ul, { BackgroundTransparency = 1 }, 0.15)
             end
+            tab._page.Visible = true
+            tween(t.btn, { TextColor3 = T.Accent2, BackgroundTransparency = 0 }, 0.15)
+            tween(t.ul, { BackgroundTransparency = 0 }, 0.15)
+            break
         end
     end
-
-    return W
 end
 
 -- ── Expose Notify at top level ────────────────────────────
