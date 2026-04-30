@@ -1960,6 +1960,59 @@ function ZethUI:CreateWindow(config)
             end
         end)
 
+                -- ── Open Button (flotante) ──────────────────────
+        local openBtn = new("TextButton", {
+            Size = UDim2.new(0, 44, 0, 44),
+            Position = UDim2.new(0, 120, 0, 120),
+            BackgroundColor3 = C.bg,
+            BackgroundTransparency = 0.05,
+            BorderSizePixel = 0,
+            Text = "+",
+            TextColor3 = C.blue2,
+            TextSize = 24,
+            Font = Enum.Font.GothamBold,
+            AutoButtonColor = false,
+            ZIndex = 10,
+            Parent = screen,
+        })
+        corner(openBtn, 12)
+        stroke(openBtn, C.blueD, 1, 0.3)
+
+        local openVisible = true
+        openBtn.MouseButton1Click:Connect(function()
+            win.Visible = not win.Visible
+            openBtn.Text = "+"
+            tween(openBtn, {BackgroundTransparency = win.Visible and 0.05 or 0.5}, 0.2)
+        end)
+
+        openBtn.MouseEnter:Connect(function()
+            tweenBack(openBtn, {Size = UDim2.new(0, 48, 0, 48)}, 0.2)
+        end)
+        openBtn.MouseLeave:Connect(function()
+            tween(openBtn, {Size = UDim2.new(0, 44, 0, 44)}, 0.15)
+        end)
+
+        -- Drag del OpenButton (Click Derecho)
+        local obDrag, obStart, obPos = false, nil, nil
+        openBtn.InputBegan:Connect(function(inp)
+            if inp.UserInputType == Enum.UserInputType.MouseButton2 then
+                obDrag = true
+                obStart = inp.Position
+                obPos = openBtn.Position
+            end
+        end)
+        UIS.InputChanged:Connect(function(inp)
+            if obDrag and inp.UserInputType == Enum.UserInputType.MouseMovement then
+                local d = inp.Position - obStart
+                openBtn.Position = UDim2.new(obPos.X.Scale, obPos.X.Offset + d.X, obPos.Y.Scale, obPos.Y.Offset + d.Y)
+            end
+        end)
+        UIS.InputEnded:Connect(function(inp)
+            if inp.UserInputType == Enum.UserInputType.MouseButton2 then
+                obDrag = false
+            end
+        end)
+        
         -- ── Methods ──
 
         -- Notify
