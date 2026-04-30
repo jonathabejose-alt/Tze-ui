@@ -1,55 +1,40 @@
--- ============================================
--- TZEUI EXAMPLE SCRIPT
--- ============================================
+-- ═══════════════════════════════════════════════════════════
+-- TZEUI PRO - EXAMPLE SCRIPT
+-- ═══════════════════════════════════════════════════════════
 local TzeUI = loadstring(game:HttpGet("https://raw.githubusercontent.com/jonathabejose-alt/Tze-ui/refs/heads/main/source.lua"))()
 
 local ui = TzeUI:CreateWindow({
-    Title = "TzeUI Demo",
+    Title = "TzeUI Pro Demo",
     Author = "tze",
-    Size = UDim2.fromOffset(680, 480),
-    Watermark = { Enabled = true, Text = "TzeUI v1" },
+    Size = UDim2.fromOffset(640, 460),
 })
-
--- Sidebar
-ui:SideBarLabel({ Title = "Quick Actions" })
-ui:SideBarButton({ Title = "Discord", Callback = function()
-    ui:Notify({ Title = "Discord", Content = "Copied!", Icon = "check", Duration = 3 })
-end })
-ui:SideBarDivider()
 
 -- Tabs
 local home = ui:Tab({ Title = "Home" })
 local elements = ui:Tab({ Title = "Elements" })
 
--- Home Tab
+-- Home
 home:Paragraph({
-    Title = "Welcome to TzeUI",
-    Desc = "A modern dark UI library made from scratch.\nSupports sections, toggles, sliders, dropdowns & more.",
+    Title = "Welcome to TzeUI Pro",
+    Desc = "Glassmorphism UI Library\nMade by tze",
+})
+home:Divider()
+home:Button({
+    Title = "Click Me",
+    Desc = "This is a button with description",
+    Callback = function()
+        ui:Notify("Button clicked!")
+    end,
 })
 
-home:Stats({
-    Title = "Info",
-    Items = {
-        { Key = "Library", Value = "TzeUI" },
-        { Key = "Author", Value = "tze" },
-        { Key = "Version", Value = "v1" },
-    },
-})
-
--- Elements Tab
-local sec = elements:Section({ Title = "Controls", Desc = "All available elements.", Box = true })
+-- Elements
+local sec = elements:Section({ Title = "Controls", Desc = "All elements", Box = true })
 
 sec:Toggle({
     Title = "Enable Feature",
     Value = false,
-    Callback = function(v) print("Toggle:", v) end,
-})
-
-sec:Button({
-    Title = "Click Me",
-    Desc = "This is a button.",
-    Callback = function()
-        ui:Notify({ Title = "Clicked!", Content = "Button works!", Icon = "check" })
+    Callback = function(v)
+        ui:Notify(v and "ON" or "OFF")
     end,
 })
 
@@ -62,8 +47,8 @@ sec:Slider({
 
 sec:Dropdown({
     Title = "Mode",
-    Value = "Easy",
-    Values = { "Easy", "Medium", "Hard" },
+    Values = { "Easy", "Normal", "Hard" },
+    Value = "Normal",
     Callback = function(v) end,
 })
 
@@ -73,5 +58,14 @@ sec:Input({
     Callback = function(v) end,
 })
 
+sec:Divider()
+
+sec:Button({
+    Title = "Save Settings",
+    Callback = function()
+        ui:Notify("Saved!")
+    end,
+})
+
 -- Notify
-ui:Notify({ Title = "TzeUI", Content = "Loaded successfully!", Icon = "check", Duration = 4 })
+ui:Notify("TzeUI Pro ready!")
